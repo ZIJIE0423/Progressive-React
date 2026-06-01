@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI智能搜题 - 搜一搜</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i data-lucide="graduation-cap" style="width:18px;height:18px"></i>
+                </div>
+                <span class="sidebar-brand">AI智能搜题</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a class="nav-item active" href="index.html">
+                    <i data-lucide="search"></i>
+                    <span class="nav-item-text">搜一搜</span>
+                </a>
+                <a class="nav-item" href="errorbook.html">
+                    <i data-lucide="book-marked"></i>
+                    <span class="nav-item-text">错题本</span>
+                </a>
+                <a class="nav-item" href="analysis.html">
+                    <i data-lucide="bar-chart-3"></i>
+                    <span class="nav-item-text">学习分析</span>
+                </a>
+            </nav>
+            <div class="sidebar-content">
+                <div class="sidebar-section-title">过往搜题</div>
+                <div class="sidebar-section">
+                    <div class="sidebar-category" onclick="toggleCategory(this)">
+                        <span class="sidebar-category-name"><i data-lucide="sigma" style="width:16px;height:16px"></i> 数学</span>
+                        <span class="sidebar-count">12</span>
+                    </div>
+                    <div class="sidebar-items">
+                        <div class="sidebar-item"><i data-lucide="file-text"></i> 二次函数求最值问题</div>
+                        <div class="sidebar-item"><i data-lucide="file-text"></i> 三角函数恒等变换</div>
+                        <div class="sidebar-item"><i data-lucide="file-text"></i> 等差数列求和公式</div>
+                    </div>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-category" onclick="toggleCategory(this)">
+                        <span class="sidebar-category-name"><i data-lucide="book-open" style="width:16px;height:16px"></i> 语文</span>
+                        <span class="sidebar-count">8</span>
+                    </div>
+                    <div class="sidebar-items">
+                        <div class="sidebar-item"><i data-lucide="file-text"></i> 文言文虚词辨析</div>
+                        <div class="sidebar-item"><i data-lucide="file-text"></i> 古诗词鉴赏-李白</div>
+                    </div>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-category" onclick="toggleCategory(this)">
+                        <span class="sidebar-category-name"><i data-lucide="languages" style="width:16px;height:16px"></i> 英语</span>
+                        <span class="sidebar-count">6</span>
+                    </div>
+                    <div class="sidebar-items">
+                        <div class="sidebar-item"><i data-lucide="file-text"></i> 虚拟语气用法</div>
+                        <div class="sidebar-item"><i data-lucide="file-text"></i> 完形填空技巧</div>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-toggle" onclick="toggleSidebar()">
+                <i data-lucide="chevron-left"></i>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="topbar-title">搜一搜</div>
+                <div class="topbar-actions">
+                    <a class="topbar-btn topbar-btn-outline" href="errorbook.html">
+                        <i data-lucide="book-marked" style="width:16px;height:16px"></i>
+                        错题本
+                    </a>
+                    <a class="topbar-btn topbar-btn-outline" href="practice.html">
+                        <i data-lucide="lightbulb" style="width:16px;height:16px"></i>
+                        举一反三
+                    </a>
+                </div>
+            </header>
+
+            <div class="page-content" style="padding:0; display:flex; flex-direction:column;">
+                <div class="search-center" id="searchCenter">
+                    <div class="search-hero" id="searchHero">
+                        <div class="search-hero-title">拍题搜解，智能答疑</div>
+                        <div class="search-hero-subtitle">上传题目照片，AI 为你逐步解析</div>
+                    </div>
+
+                    <div class="search-bar-wrapper" id="searchBarWrapper">
+                        <div class="search-bar">
+                            <i data-lucide="search" style="width:20px;height:20px;color:var(--text-muted);flex-shrink:0"></i>
+                            <input type="text" placeholder="输入题目内容或点击右侧上传照片..." id="searchInput" onkeydown="if(event.key==='Enter')handleSearch()">
+                            <div class="search-bar-divider"></div>
+                            <button class="search-bar-action" title="语音输入">
+                                <i data-lucide="mic" style="width:18px;height:18px"></i>
+                            </button>
+                            <button class="upload-btn" onclick="openUpload()" title="上传照片">
+                                <i data-lucide="camera" style="width:18px;height:18px"></i>
+                            </button>
+                        </div>
+                        <div class="search-hints">
+                            <span class="search-hint" onclick="fillHint('二次函数 y=ax²+bx+c 的最小值怎么求？')">二次函数求最值</span>
+                            <span class="search-hint" onclick="fillHint('文言文虚词"之"的用法有哪些？')">文言文虚词</span>
+                            <span class="search-hint" onclick="fillHint('虚拟语气的用法是什么？')">英语虚拟语气</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="upload-overlay" id="uploadOverlay" onclick="closeUpload(event)">
+        <div class="upload-modal" onclick="event.stopPropagation()">
+            <h3 style="font-size:18px;font-weight:700;margin-bottom:20px;color:var(--text)">上传题目照片</h3>
+            <div class="upload-dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
+                <i data-lucide="image-plus" style="width:48px;height:48px"></i>
+                <p>点击或拖拽照片到此处</p>
+                <p class="upload-formats">支持 JPG、PNG、WEBP 格式</p>
+            </div>
+            <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="handleFileSelect(event)">
+            <div id="previewArea" style="display:none; margin-bottom:16px;">
+                <div class="image-preview-container">
+                    <img class="image-preview" id="previewImg" src="" alt="预览">
+                    <div class="image-preview-remove" onclick="removePreview()">
+                        <i data-lucide="x" style="width:12px;height:12px"></i>
+                    </div>
+                </div>
+            </div>
+            <div style="display:flex;gap:10px;justify-content:center">
+                <button class="btn btn-ghost" onclick="closeUpload()">取消</button>
+                <button class="btn btn-primary" id="submitBtn" onclick="submitImage()" style="display:none">
+                    <i data-lucide="search" style="width:16px;height:16px"></i>
+                    开始搜题
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+        }
+
+        function toggleCategory(el) {
+            var items = el.nextElementSibling;
+            items.classList.toggle('open');
+            var chevron = el.querySelector('i:last-child');
+        }
+
+        function fillHint(text) {
+            document.getElementById('searchInput').value = text;
+        }
+
+        function handleSearch() {
+            var val = document.getElementById('searchInput').value.trim();
+            if (val) {
+                window.location.href = 'result.html';
+            }
+        }
+
+        function openUpload() {
+            document.getElementById('uploadOverlay').classList.add('active');
+        }
+
+        function closeUpload(e) {
+            if (e && e.target !== e.currentTarget) return;
+            document.getElementById('uploadOverlay').classList.remove('active');
+            removePreview();
+        }
+
+        function handleFileSelect(e) {
+            var file = e.target.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(ev) {
+                    document.getElementById('previewImg').src = ev.target.result;
+                    document.getElementById('previewArea').style.display = 'block';
+                    document.getElementById('submitBtn').style.display = 'inline-flex';
+                    document.getElementById('dropzone').style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removePreview() {
+            document.getElementById('previewArea').style.display = 'none';
+            document.getElementById('submitBtn').style.display = 'none';
+            document.getElementById('dropzone').style.display = 'block';
+            document.getElementById('fileInput').value = '';
+        }
+
+        function submitImage() {
+            document.getElementById('uploadOverlay').classList.remove('active');
+            var center = document.getElementById('searchCenter');
+            var hero = document.getElementById('searchHero');
+            center.classList.add('at-bottom');
+            hero.classList.add('hidden');
+            setTimeout(function() {
+                window.location.href = 'result.html';
+            }, 800);
+        }
+
+        var dropzone = document.getElementById('dropzone');
+        dropzone.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            dropzone.style.borderColor = 'var(--primary)';
+            dropzone.style.background = 'var(--primary-lighter)';
+        });
+        dropzone.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            dropzone.style.borderColor = 'var(--border)';
+            dropzone.style.background = '';
+        });
+        dropzone.addEventListener('drop', function(e) {
+            e.preventDefault();
+            dropzone.style.borderColor = 'var(--border)';
+            dropzone.style.background = '';
+            if (e.dataTransfer.files.length) {
+                document.getElementById('fileInput').files = e.dataTransfer.files;
+                handleFileSelect({ target: { files: e.dataTransfer.files } });
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeUpload();
+        });
+    </script>
+</body>
+</html>

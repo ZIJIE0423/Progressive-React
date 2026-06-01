@@ -1,7 +1,6 @@
 # === Project specific exclusions ===
 Github baseline与逆向PRD分析/ai_analysis/
-prototype/
-screenshots/
+
 screenshot.py
 .trae/
 

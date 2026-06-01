@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI智能搜题 - 搜题结果</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo"><i data-lucide="graduation-cap" style="width:18px;height:18px"></i></div>
+                <span class="sidebar-brand">AI智能搜题</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a class="nav-item" href="index.html"><i data-lucide="search"></i><span class="nav-item-text">搜一搜</span></a>
+                <a class="nav-item" href="errorbook.html"><i data-lucide="book-marked"></i><span class="nav-item-text">错题本</span></a>
+                <a class="nav-item" href="analysis.html"><i data-lucide="bar-chart-3"></i><span class="nav-item-text">学习分析</span></a>
+            </nav>
+            <div class="sidebar-content">
+                <div class="sidebar-section-title">过往搜题</div>
+                <div class="sidebar-section">
+                    <div class="sidebar-category" onclick="toggleCategory(this)">
+                        <span class="sidebar-category-name"><i data-lucide="sigma" style="width:16px;height:16px"></i> 数学</span>
+                        <span class="sidebar-count">12</span>
+                    </div>
+                    <div class="sidebar-items">
+                        <div class="sidebar-item"><i data-lucide="file-text"></i> 二次函数求最值问题</div>
+                        <div class="sidebar-item"><i data-lucide="file-text"></i> 三角函数恒等变换</div>
+                        <div class="sidebar-item"><i data-lucide="file-text"></i> 等差数列求和公式</div>
+                    </div>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-category" onclick="toggleCategory(this)">
+                        <span class="sidebar-category-name"><i data-lucide="book-open" style="width:16px;height:16px"></i> 语文</span>
+                        <span class="sidebar-count">8</span>
+                    </div>
+                    <div class="sidebar-items">
+                        <div class="sidebar-item"><i data-lucide="file-text"></i> 文言文虚词辨析</div>
+                        <div class="sidebar-item"><i data-lucide="file-text"></i> 古诗词鉴赏-李白</div>
+                    </div>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-category" onclick="toggleCategory(this)">
+                        <span class="sidebar-category-name"><i data-lucide="languages" style="width:16px;height:16px"></i> 英语</span>
+                        <span class="sidebar-count">6</span>
+                    </div>
+                    <div class="sidebar-items">
+                        <div class="sidebar-item"><i data-lucide="file-text"></i> 虚拟语气用法</div>
+                        <div class="sidebar-item"><i data-lucide="file-text"></i> 完形填空技巧</div>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-toggle" onclick="toggleSidebar()"><i data-lucide="chevron-left"></i></div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="topbar-title">搜题结果</div>
+                <div class="topbar-actions">
+                    <a class="topbar-btn topbar-btn-outline" href="errorbook.html">
+                        <i data-lucide="book-marked" style="width:16px;height:16px"></i> 错题本
+                    </a>
+                    <a class="topbar-btn topbar-btn-outline" href="practice.html">
+                        <i data-lucide="lightbulb" style="width:16px;height:16px"></i> 举一反三
+                    </a>
+                </div>
+            </header>
+
+            <div class="dialog-container" id="dialogContainer">
+                <div class="dialog-msg user animate-fade-in-up">
+                    <div class="dialog-avatar human"><i data-lucide="user" style="width:18px;height:18px"></i></div>
+                    <div class="dialog-bubble">
+                        <div style="margin-bottom:8px">请帮我解答这道数学题</div>
+                        <div style="background:rgba(255,255,255,0.15);border-radius:8px;padding:12px;display:flex;align-items:center;gap:10px">
+                            <i data-lucide="image" style="width:20px;height:20px;flex-shrink:0"></i>
+                            <span style="font-size:13px;opacity:0.9">已上传题目图片</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dialog-msg animate-fade-in-up" style="animation-delay:0.3s">
+                    <div class="dialog-avatar ai"><i data-lucide="sparkles" style="width:18px;height:18px"></i></div>
+                    <div class="dialog-bubble">
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+                            <i data-lucide="scan-text" style="width:16px;height:16px;color:var(--primary)"></i>
+                            <strong style="color:var(--primary)">OCR 识别结果</strong>
+                        </div>
+                        <p style="color:var(--text-secondary);font-size:13px;background:var(--bg);padding:12px;border-radius:8px;margin-bottom:16px;line-height:1.8">
+                            已知二次函数 f(x) = 2x² - 8x + 6，求：<br>
+                            (1) 函数的顶点坐标；<br>
+                            (2) 函数的最小值及取得最小值时 x 的值；<br>
+                            (3) 函数的单调递增区间和单调递减区间。
+                        </p>
+
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
+                            <i data-lucide="list-checks" style="width:16px;height:16px;color:var(--primary)"></i>
+                            <strong style="color:var(--primary)">完整解析</strong>
+                        </div>
+
+                        <div class="step-card">
+                            <div class="step-num">1</div>
+                            <div class="step-text">
+                                将一般式转化为顶点式：<br>
+                                <span class="formula">f(x) = 2x² - 8x + 6 = 2(x² - 4x) + 6</span><br>
+                                <span class="formula">= 2(x² - 4x + 4 - 4) + 6</span><br>
+                                <span class="formula">= 2(x - 2)² - 8 + 6</span><br>
+                                <span class="formula">= 2(x - 2)² - 2</span>
+                            </div>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-num">2</div>
+                            <div class="step-text">
+                                由顶点式 <span class="formula">f(x) = 2(x - 2)² - 2</span> 可知：<br>
+                                顶点坐标为 <span class="formula">(2, -2)</span>
+                            </div>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-num">3</div>
+                            <div class="step-text">
+                                因为 a = 2 > 0，抛物线开口向上：<br>
+                                当 <span class="formula">x = 2</span> 时，f(x) 取得<strong>最小值</strong> <span class="formula">-2</span>
+                            </div>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-num">4</div>
+                            <div class="step-text">
+                                单调性分析：对称轴 <span class="formula">x = 2</span><br>
+                                单调递减区间：<span class="formula">(-∞, 2)</span><br>
+                                单调递增区间：<span class="formula">(2, +∞)</span>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border)">
+                            <p style="font-size:14px;margin-bottom:14px;color:var(--text)">
+                                <i data-lucide="lightbulb" style="width:16px;height:16px;color:var(--accent);vertical-align:middle;margin-right:4px"></i>
+                                你希望以哪种方式深入学习这道题？
+                            </p>
+                            <div style="display:flex;flex-direction:column;gap:10px">
+                                <div class="mode-card recommended" onclick="enterThinking()">
+                                    <div class="mode-card-icon primary"><i data-lucide="brain" style="width:20px;height:20px"></i></div>
+                                    <div>
+                                        <div class="mode-card-title">思考模式</div>
+                                        <div class="mode-card-desc">AI 逐步引导你思考，帮你真正理解每个知识点，而非直接看答案</div>
+                                    </div>
+                                </div>
+                                <div class="mode-card" onclick="showDirectAnswer()">
+                                    <div class="mode-card-icon secondary"><i data-lucide="file-text" style="width:20px;height:20px"></i></div>
+                                    <div>
+                                        <div class="mode-card-title">直接查看答案</div>
+                                        <div class="mode-card-desc">直接展示完整解题过程和最终答案</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="directAnswerSection" style="display:none;margin-top:16px;">
+                            <div style="background:var(--primary-lighter);border-radius:10px;padding:16px;margin-bottom:12px">
+                                <div style="font-weight:600;color:var(--primary);margin-bottom:8px;display:flex;align-items:center;gap:6px">
+                                    <i data-lucide="check-circle" style="width:16px;height:16px"></i>
+                                    最终答案
+                                </div>
+                                <p style="font-size:14px;line-height:1.8;color:var(--text)">
+                                    (1) 顶点坐标为 <strong>(2, -2)</strong><br>
+                                    (2) 最小值为 <strong>-2</strong>，当 x = 2 时取得<br>
+                                    (3) 单调递减区间为 (-∞, 2)，单调递增区间为 (2, +∞)
+                                </p>
+                            </div>
+                            <div class="toggle-container" style="padding:8px 0">
+                                <div class="toggle" id="thinkingToggle" onclick="toggleThinkingMode()"></div>
+                                <span>随时进入思考模式</span>
+                            </div>
+                        </div>
+
+                        <div id="errorbookSection" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
+                            <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+                                <i data-lucide="bookmark-plus" style="width:18px;height:18px;color:var(--primary)"></i>
+                                <strong style="font-size:14px">是否将本题加入错题本？</strong>
+                            </div>
+                            <p style="font-size:13px;color:var(--text-secondary);margin-bottom:12px">加入错题本后，AI 会为你生成知识薄弱点分析，并推荐针对性练习。</p>
+                            <div style="display:flex;gap:10px">
+                                <button class="btn btn-primary btn-sm" onclick="saveToErrorbook()">
+                                    <i data-lucide="bookmark-plus" style="width:14px;height:14px"></i> 加入错题本
+                                </button>
+                                <button class="btn btn-ghost btn-sm" onclick="skipErrorbook()">不需要</button>
+                            </div>
+                        </div>
+
+                        <div id="savedMsg" style="display:none;margin-top:16px">
+                            <div class="encouragement">
+                                <i data-lucide="check-circle-2" style="width:20px;height:20px"></i>
+                                <p>已成功加入错题本！AI 已为你生成本次对话的<strong>知识薄弱点分析</strong>，可在<a href="analysis.html" style="color:var(--primary);font-weight:600">学习分析</a>中查看。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dialog-input-bar">
+                <div class="dialog-input-wrapper">
+                    <i data-lucide="message-square" style="width:18px;height:18px;color:var(--text-muted);flex-shrink:0"></i>
+                    <input type="text" placeholder="继续提问或输入你的疑问..." id="chatInput" onkeydown="if(event.key==='Enter')sendMessage()">
+                    <button class="search-bar-action" onclick="sendMessage()"><i data-lucide="send" style="width:16px;height:16px"></i></button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+        }
+
+        function toggleCategory(el) {
+            el.nextElementSibling.classList.toggle('open');
+        }
+
+        function enterThinking() {
+            window.location.href = 'thinking.html';
+        }
+
+        function showDirectAnswer() {
+            document.getElementById('directAnswerSection').style.display = 'block';
+            document.getElementById('errorbookSection').style.display = 'block';
+            document.getElementById('directAnswerSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function toggleThinkingMode() {
+            var toggle = document.getElementById('thinkingToggle');
+            toggle.classList.toggle('active');
+            if (toggle.classList.contains('active')) {
+                setTimeout(function() { window.location.href = 'thinking.html'; }, 300);
+            }
+        }
+
+        function saveToErrorbook() {
+            document.getElementById('errorbookSection').style.display = 'none';
+            document.getElementById('savedMsg').style.display = 'block';
+            document.getElementById('savedMsg').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function skipErrorbook() {
+            document.getElementById('errorbookSection').style.display = 'none';
+        }
+
+        function sendMessage() {
+            var input = document.getElementById('chatInput');
+            var text = input.value.trim();
+            if (!text) return;
+
+            var container = document.getElementById('dialogContainer');
+
+            var userDiv = document.createElement('div');
+            userDiv.className = 'dialog-msg user animate-fade-in-up';
+            userDiv.innerHTML = '<div class="dialog-avatar human"><i data-lucide="user" style="width:18px;height:18px"></i></div>' +
+                '<div class="dialog-bubble">' + text + '</div>';
+            container.appendChild(userDiv);
+
+            input.value = '';
+            lucide.createIcons();
+
+            var typingDiv = document.createElement('div');
+            typingDiv.className = 'dialog-msg animate-fade-in-up';
+            typingDiv.id = 'typing';
+            typingDiv.innerHTML = '<div class="dialog-avatar ai"><i data-lucide="sparkles" style="width:18px;height:18px"></i></div>' +
+                '<div class="dialog-bubble"><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>';
+            container.appendChild(typingDiv);
+            container.scrollTop = container.scrollHeight;
+
+            setTimeout(function() {
+                var t = document.getElementById('typing');
+                if (t) t.remove();
+                var aiDiv = document.createElement('div');
+                aiDiv.className = 'dialog-msg animate-fade-in-up';
+                aiDiv.innerHTML = '<div class="dialog-avatar ai"><i data-lucide="sparkles" style="width:18px;height:18px"></i></div>' +
+                    '<div class="dialog-bubble"><p>感谢你的提问！这个问题涉及到二次函数的图像性质。简单来说，二次项系数 a=2>0 决定了抛物线开口向上，因此函数有最小值而无最大值。如果你还有其他疑问，随时可以继续问我。</p>' +
+                    '<div style="margin-top:12px" class="toggle-container"><div class="toggle" onclick="this.classList.toggle(\'active\');if(this.classList.contains(\'active\'))setTimeout(function(){window.location.href=\'thinking.html\'},300)"></div><span>进入思考模式深入理解</span></div></div>';
+                container.appendChild(aiDiv);
+                lucide.createIcons();
+                container.scrollTop = container.scrollHeight;
+            }, 1500);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI智能搜题 - 错题本</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo"><i data-lucide="graduation-cap" style="width:18px;height:18px"></i></div>
+                <span class="sidebar-brand">AI智能搜题</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a class="nav-item" href="index.html"><i data-lucide="search"></i><span class="nav-item-text">搜一搜</span></a>
+                <a class="nav-item active" href="errorbook.html"><i data-lucide="book-marked"></i><span class="nav-item-text">错题本</span></a>
+                <a class="nav-item" href="analysis.html"><i data-lucide="bar-chart-3"></i><span class="nav-item-text">学习分析</span></a>
+            </nav>
+            <div class="sidebar-content">
+                <div class="sidebar-section-title">过往搜题</div>
+                <div class="sidebar-section">
+                    <div class="sidebar-category" onclick="toggleCategory(this)">
+                        <span class="sidebar-category-name"><i data-lucide="sigma" style="width:16px;height:16px"></i> 数学</span>
+                        <span class="sidebar-count">12</span>
+                    </div>
+                    <div class="sidebar-items">
+                        <div class="sidebar-item"><i data-lucide="file-text"></i> 二次函数求最值问题</div>
+                        <div class="sidebar-item"><i data-lucide="file-text"></i> 三角函数恒等变换</div>
+                        <div class="sidebar-item"><i data-lucide="file-text"></i> 等差数列求和公式</div>
+                    </div>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-category" onclick="toggleCategory(this)">
+                        <span class="sidebar-category-name"><i data-lucide="book-open" style="width:16px;height:16px"></i> 语文</span>
+                        <span class="sidebar-count">8</span>
+                    </div>
+                    <div class="sidebar-items">
+                        <div class="sidebar-item"><i data-lucide="file-text"></i> 文言文虚词辨析</div>
+                        <div class="sidebar-item"><i data-lucide="file-text"></i> 古诗词鉴赏-李白</div>
+                    </div>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-category" onclick="toggleCategory(this)">
+                        <span class="sidebar-category-name"><i data-lucide="languages" style="width:16px;height:16px"></i> 英语</span>
+                        <span class="sidebar-count">6</span>
+                    </div>
+                    <div class="sidebar-items">
+                        <div class="sidebar-item"><i data-lucide="file-text"></i> 虚拟语气用法</div>
+                        <div class="sidebar-item"><i data-lucide="file-text"></i> 完形填空技巧</div>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-toggle" onclick="toggleSidebar()"><i data-lucide="chevron-left"></i></div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="topbar-title">
+                    <span id="pageTitle">错题本</span>
+                    <span id="breadcrumb" style="display:none;font-size:13px;color:var(--text-muted);font-weight:400">
+                        / <span id="breadcrumbSubject"></span>
+                    </span>
+                </div>
+                <div class="topbar-actions">
+                    <a class="topbar-btn topbar-btn-outline" href="practice.html">
+                        <i data-lucide="lightbulb" style="width:16px;height:16px"></i> 举一反三
+                    </a>
+                    <a class="topbar-btn topbar-btn-primary" href="analysis.html">
+                        <i data-lucide="bar-chart-3" style="width:16px;height:16px"></i> 查看分析
+                    </a>
+                </div>
+            </header>
+
+            <div class="page-content" id="subjectView">
+                <div style="margin-bottom:24px">
+                    <h2 style="font-size:20px;font-weight:700;color:var(--text);margin-bottom:4px">我的错题本</h2>
+                    <p style="font-size:14px;color:var(--text-secondary)">按科目分类管理你的错题，共 <strong style="color:var(--primary)">26</strong> 道</p>
+                </div>
+
+                <div class="subject-grid">
+                    <div class="subject-card math" onclick="showSubjectErrors('数学')">
+                        <div class="subject-icon"><i data-lucide="sigma" style="width:24px;height:24px"></i></div>
+                        <div class="subject-name">数学</div>
+                        <div class="subject-count">12 道错题</div>
+                        <div class="subject-bar"><div class="subject-bar-fill" style="width:60%"></div></div>
+                    </div>
+                    <div class="subject-card chinese" onclick="showSubjectErrors('语文')">
+                        <div class="subject-icon"><i data-lucide="book-open" style="width:24px;height:24px"></i></div>
+                        <div class="subject-name">语文</div>
+                        <div class="subject-count">8 道错题</div>
+                        <div class="subject-bar"><div class="subject-bar-fill" style="width:40%"></div></div>
+                    </div>
+                    <div class="subject-card english" onclick="showSubjectErrors('英语')">
+                        <div class="subject-icon"><i data-lucide="languages" style="width:24px;height:24px"></i></div>
+                        <div class="subject-name">英语</div>
+                        <div class="subject-count">6 道错题</div>
+                        <div class="subject-bar"><div class="subject-bar-fill" style="width:30%"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-content" id="errorListView" style="display:none">
+                <div style="margin-bottom:20px;display:flex;align-items:center;gap:12px">
+                    <button class="btn btn-ghost btn-sm" onclick="backToSubjects()">
+                        <i data-lucide="arrow-left" style="width:16px;height:16px"></i> 返回
+                    </button>
+                    <h2 style="font-size:18px;font-weight:700" id="subjectTitle">数学</h2>
+                    <span style="font-size:13px;color:var(--text-secondary)" id="subjectErrorCount">12 道错题</span>
+                </div>
+
+                <div class="error-list" id="errorList"></div>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="deleteModal" onclick="closeDeleteModal(event)">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <i data-lucide="alert-triangle" style="width:40px;height:40px;color:var(--danger);margin-bottom:12px"></i>
+            <div class="modal-title">确认删除</div>
+            <div class="modal-desc">确定要删除这道错题吗？删除后将无法恢复。</div>
+            <div class="modal-actions">
+                <button class="btn btn-ghost" onclick="closeDeleteModal()">取消</button>
+                <button class="btn btn-danger" onclick="confirmDelete()">确认删除</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        var errorData = {
+            '数学': [
+                { id: 1, title: '二次函数 f(x)=2x²-8x+6 求顶点坐标与最值', date: '2026-06-01', tag: '二次函数', weak: '配方法' },
+                { id: 2, title: '三角函数 sin²x+cos²x=1 恒等变换证明', date: '2026-05-28', tag: '三角函数', weak: '恒等变换' },
+                { id: 3, title: '等差数列前 n 项和 Sn=n/2(2a₁+(n-1)d)', date: '2026-05-25', tag: '数列', weak: '数列求和' },
+                { id: 4, title: '概率：从5个球中取2个，求至少1个红球的概率', date: '2026-05-22', tag: '概率统计', weak: '条件概率' },
+                { id: 5, title: '向量点积与夹角的计算', date: '2026-05-20', tag: '向量', weak: '向量运算' },
+                { id: 6, title: '不等式 |2x-1| < 3 的解法', date: '2026-05-18', tag: '不等式', weak: '绝对值不等式' }
+            ],
+            '语文': [
+                { id: 7, title: '文言文虚词"之"的五种用法辨析', date: '2026-05-30', tag: '文言文', weak: '虚词用法' },
+                { id: 8, title: '古诗词鉴赏：李白《将进酒》意象分析', date: '2026-05-27', tag: '古诗词', weak: '意象分析' },
+                { id: 9, title: '现代文阅读：概括文章主旨的方法', date: '2026-05-24', tag: '阅读理解', weak: '主旨概括' },
+                { id: 10, title: '成语辨析：首当其冲 vs 一马当先', date: '2026-05-20', tag: '基础知识', weak: '成语辨析' }
+            ],
+            '英语': [
+                { id: 11, title: '虚拟语气在条件句中的三种形式', date: '2026-05-29', tag: '语法', weak: '虚拟语气' },
+                { id: 12, title: '定语从句中 which 和 that 的区别', date: '2026-05-26', tag: '语法', weak: '定语从句' },
+                { id: 13, title: '完形填空：上下文逻辑推理题', date: '2026-05-23', tag: '阅读', weak: '语境推理' }
+            ]
+        };
+
+        var deleteTargetId = null;
+        var currentSubject = '';
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+        }
+
+        function toggleCategory(el) {
+            el.nextElementSibling.classList.toggle('open');
+        }
+
+        function showSubjectErrors(subject) {
+            currentSubject = subject;
+            document.getElementById('subjectView').style.display = 'none';
+            document.getElementById('errorListView').style.display = 'block';
+            document.getElementById('subjectTitle').textContent = subject;
+            document.getElementById('breadcrumb').style.display = 'inline';
+            document.getElementById('breadcrumbSubject').textContent = subject;
+
+            var tagClass = subject === '数学' ? 'tag-math' : subject === '语文' ? 'tag-chinese' : 'tag-english';
+            var items = errorData[subject] || [];
+            document.getElementById('subjectErrorCount').textContent = items.length + ' 道错题';
+
+            var html = '';
+            items.forEach(function(item) {
+                html += '<div class="error-item" id="item-' + item.id + '">' +
+                    '<div style="width:36px;height:36px;border-radius:8px;background:var(--primary-light);display:flex;align-items:center;justify-content:center;flex-shrink:0">' +
+                    '<i data-lucide="file-text" style="width:16px;height:16px;color:var(--primary)"></i></div>' +
+                    '<div class="error-item-content" onclick="window.location.href=\'result.html\'">' +
+                    '<div class="error-item-title">' + item.title + '</div>' +
+                    '<div class="error-item-meta">' +
+                    '<span class="error-item-tag ' + tagClass + '">' + item.tag + '</span>' +
+                    '<span><i data-lucide="calendar" style="width:12px;height:12px;vertical-align:middle"></i> ' + item.date + '</span>' +
+                    '<span>薄弱点: ' + item.weak + '</span>' +
+                    '</div></div>' +
+                    '<div style="display:flex;gap:4px">' +
+                    '<a class="error-item-delete" href="practice.html" title="举一反三" onclick="event.stopPropagation()"><i data-lucide="lightbulb" style="width:16px;height:16px"></i></a>' +
+                    '<div class="error-item-delete" onclick="event.stopPropagation();openDeleteModal(' + item.id + ')" title="删除"><i data-lucide="trash-2" style="width:16px;height:16px"></i></div>' +
+                    '</div></div>';
+            });
+            document.getElementById('errorList').innerHTML = html;
+            lucide.createIcons();
+        }
+
+        function backToSubjects() {
+            document.getElementById('subjectView').style.display = 'block';
+            document.getElementById('errorListView').style.display = 'none';
+            document.getElementById('breadcrumb').style.display = 'none';
+        }
+
+        function openDeleteModal(id) {
+            deleteTargetId = id;
+            document.getElementById('deleteModal').classList.add('active');
+        }
+
+        function closeDeleteModal(e) {
+            if (e && e.target !== e.currentTarget) return;
+            document.getElementById('deleteModal').classList.remove('active');
+            deleteTargetId = null;
+        }
+
+        function confirmDelete() {
+            if (deleteTargetId !== null) {
+                var el = document.getElementById('item-' + deleteTargetId);
+                if (el) {
+                    el.style.transition = 'all 0.3s';
+                    el.style.opacity = '0';
+                    el.style.transform = 'translateX(20px)';
+                    setTimeout(function() { el.remove(); }, 300);
+                }
+                var data = errorData[currentSubject];
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].id === deleteTargetId) {
+                        data.splice(i, 1);
+                        break;
+                    }
+                }
+                document.getElementById('subjectErrorCount').textContent = data.length + ' 道错题';
+            }
+            closeDeleteModal();
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeDeleteModal();
+        });
+    </script>
+</body>
+</html>

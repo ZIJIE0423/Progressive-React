@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI智能搜题 - 思考模式</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo"><i data-lucide="graduation-cap" style="width:18px;height:18px"></i></div>
+                <span class="sidebar-brand">AI智能搜题</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a class="nav-item" href="index.html"><i data-lucide="search"></i><span class="nav-item-text">搜一搜</span></a>
+                <a class="nav-item" href="errorbook.html"><i data-lucide="book-marked"></i><span class="nav-item-text">错题本</span></a>
+                <a class="nav-item" href="analysis.html"><i data-lucide="bar-chart-3"></i><span class="nav-item-text">学习分析</span></a>
+            </nav>
+            <div class="sidebar-content">
+                <div class="sidebar-section-title">过往搜题</div>
+                <div class="sidebar-section">
+                    <div class="sidebar-category" onclick="toggleCategory(this)">
+                        <span class="sidebar-category-name"><i data-lucide="sigma" style="width:16px;height:16px"></i> 数学</span>
+                        <span class="sidebar-count">12</span>
+                    </div>
+                    <div class="sidebar-items">
+                        <div class="sidebar-item"><i data-lucide="file-text"></i> 二次函数求最值问题</div>
+                        <div class="sidebar-item"><i data-lucide="file-text"></i> 三角函数恒等变换</div>
+                        <div class="sidebar-item"><i data-lucide="file-text"></i> 等差数列求和公式</div>
+                    </div>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-category" onclick="toggleCategory(this)">
+                        <span class="sidebar-category-name"><i data-lucide="book-open" style="width:16px;height:16px"></i> 语文</span>
+                        <span class="sidebar-count">8</span>
+                    </div>
+                    <div class="sidebar-items">
+                        <div class="sidebar-item"><i data-lucide="file-text"></i> 文言文虚词辨析</div>
+                        <div class="sidebar-item"><i data-lucide="file-text"></i> 古诗词鉴赏-李白</div>
+                    </div>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-category" onclick="toggleCategory(this)">
+                        <span class="sidebar-category-name"><i data-lucide="languages" style="width:16px;height:16px"></i> 英语</span>
+                        <span class="sidebar-count">6</span>
+                    </div>
+                    <div class="sidebar-items">
+                        <div class="sidebar-item"><i data-lucide="file-text"></i> 虚拟语气用法</div>
+                        <div class="sidebar-item"><i data-lucide="file-text"></i> 完形填空技巧</div>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-toggle" onclick="toggleSidebar()"><i data-lucide="chevron-left"></i></div>
+        </aside>
+
+        <main class="main-content">
+            <div class="thinking-header-bar">
+                <a class="back-btn" href="result.html"><i data-lucide="arrow-left" style="width:20px;height:20px"></i></a>
+                <span class="thinking-title">思考模式</span>
+                <span class="thinking-badge">二次函数求最值</span>
+                <div style="flex:1"></div>
+                <div class="thinking-badge" style="cursor:pointer" onclick="endThinking()">
+                    <i data-lucide="log-out" style="width:14px;height:14px;vertical-align:middle;margin-right:4px"></i>退出
+                </div>
+            </div>
+
+            <div class="dialog-container" id="dialogContainer">
+                <div class="dialog-msg animate-fade-in-up">
+                    <div class="dialog-avatar ai"><i data-lucide="brain" style="width:18px;height:18px"></i></div>
+                    <div class="dialog-bubble">
+                        <p style="margin-bottom:12px">欢迎进入<strong>思考模式</strong>！我会引导你一步步理解这道题，而不是直接告诉你答案。</p>
+                        <p style="margin-bottom:12px">题目回顾：</p>
+                        <div style="background:var(--bg);padding:12px;border-radius:8px;font-size:13px;line-height:1.8;color:var(--text-secondary);margin-bottom:16px">
+                            已知二次函数 f(x) = 2x² - 8x + 6，求：<br>
+                            (1) 函数的顶点坐标<br>
+                            (2) 函数的最小值<br>
+                            (3) 单调递增区间和单调递减区间
+                        </div>
+                        <p>
+                            <i data-lucide="message-circle-question" style="width:16px;height:16px;color:var(--accent);vertical-align:middle;margin-right:4px"></i>
+                            这道题涉及到几个关键知识点。你觉得自己<strong>哪一步最困惑</strong>？或者你想从哪一步开始理解？
+                        </p>
+                        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px">
+                            <button class="btn btn-outline btn-sm" onclick="selectTopic('配方法')">配方法是什么？</button>
+                            <button class="btn btn-outline btn-sm" onclick="selectTopic('顶点式')">顶点式怎么用？</button>
+                            <button class="btn btn-outline btn-sm" onclick="selectTopic('最值')">怎么求最值？</button>
+                            <button class="btn btn-outline btn-sm" onclick="selectTopic('单调性')">单调性怎么判断？</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dialog-msg user animate-fade-in-up" style="animation-delay:0.4s" id="userQuestion1">
+                    <div class="dialog-avatar human"><i data-lucide="user" style="width:18px;height:18px"></i></div>
+                    <div class="dialog-bubble">配方法是什么？我不太理解怎么把一般式变成顶点式</div>
+                </div>
+
+                <div class="dialog-msg animate-fade-in-up" style="animation-delay:0.6s" id="aiResponse1">
+                    <div class="dialog-avatar ai"><i data-lucide="brain" style="width:18px;height:18px"></i></div>
+                    <div class="dialog-bubble">
+                        <p style="margin-bottom:12px">很好的问题！让我来帮你理解<strong>配方法</strong>。</p>
+
+                        <div class="knowledge-card">
+                            <div class="knowledge-card-title">
+                                <i data-lucide="book-open" style="width:14px;height:14px"></i>
+                                知识点：配方法
+                            </div>
+                            <div class="knowledge-card-body">
+                                配方法的核心思想是：将一个二次多项式变形为 <strong>(x + a)² + b</strong> 的形式。<br><br>
+                                关键公式：<strong>(x + a)² = x² + 2ax + a²</strong><br>
+                                反过来：x² + 2ax = (x + a)² - a²
+                            </div>
+                        </div>
+
+                        <p style="margin-top:12px;margin-bottom:12px">应用到这道题：</p>
+                        <div style="background:var(--bg);padding:14px;border-radius:8px;font-size:13px;line-height:2;margin-bottom:12px">
+                            f(x) = 2x² - 8x + 6<br>
+                            第一步：提取二次项系数 → <strong>2(x² - 4x)</strong> + 6<br>
+                            第二步：括号内配方 → x² - 4x = x² - 4x + <strong>4 - 4</strong> = (x-2)² - 4<br>
+                            第三步：代回 → 2[(x-2)² - 4] + 6 = <strong>2(x-2)² - 2</strong>
+                        </div>
+
+                        <div style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:#fffbeb;border-radius:8px;margin-bottom:12px;font-size:13px;color:#92400e">
+                            <i data-lucide="image" style="width:16px;height:16px;flex-shrink:0"></i>
+                            需要我生成一张图示来帮助你理解配方过程吗？
+                            <button class="btn btn-sm btn-accent" style="margin-left:auto;white-space:nowrap" onclick="showImage()">生成图示</button>
+                        </div>
+
+                        <p style="margin-top:8px">
+                            <i data-lucide="help-circle" style="width:16px;height:16px;color:var(--primary);vertical-align:middle;margin-right:4px"></i>
+                            现在你理解了配方法之后，你觉得这道题你能独立解答出来吗？
+                        </p>
+                        <div class="check-btn-group">
+                            <button class="btn btn-primary btn-sm" onclick="canSolve()">
+                                <i data-lucide="thumbs-up" style="width:14px;height:14px"></i> 可以独立解答
+                            </button>
+                            <button class="btn btn-outline btn-sm" onclick="cannotSolve()">
+                                <i data-lucide="thumbs-down" style="width:14px;height:14px"></i> 还有不懂的地方
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dialog-input-bar">
+                <div class="dialog-input-wrapper">
+                    <i data-lucide="message-square" style="width:18px;height:18px;color:var(--text-muted);flex-shrink:0"></i>
+                    <input type="text" placeholder="输入你的疑问..." id="chatInput" onkeydown="if(event.key==='Enter')sendThinkingMsg()">
+                    <button class="search-bar-action" onclick="sendThinkingMsg()"><i data-lucide="send" style="width:16px;height:16px"></i></button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="imageModal" onclick="closeImageModal(event)">
+        <div class="upload-modal" onclick="event.stopPropagation()" style="max-width:520px">
+            <h3 style="font-size:16px;font-weight:600;margin-bottom:16px;color:var(--text)">配方过程图示</h3>
+            <div style="background:var(--bg);border-radius:12px;padding:24px;text-align:left">
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+                    <div style="width:40px;height:40px;background:var(--primary-light);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--primary);font-weight:700">1</div>
+                    <div>
+                        <div style="font-weight:600;font-size:14px">一般式</div>
+                        <div style="font-family:'Cambria Math',serif;color:var(--primary);font-size:16px">f(x) = 2x² - 8x + 6</div>
+                    </div>
+                </div>
+                <div style="text-align:center;color:var(--text-muted);margin:8px 0"><i data-lucide="arrow-down" style="width:20px;height:20px"></i></div>
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+                    <div style="width:40px;height:40px;background:#fef3c7;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:700">2</div>
+                    <div>
+                        <div style="font-weight:600;font-size:14px">提取系数 + 配方</div>
+                        <div style="font-family:'Cambria Math',serif;color:var(--accent);font-size:16px">2(x² - 4x + 4 - 4) + 6</div>
+                    </div>
+                </div>
+                <div style="text-align:center;color:var(--text-muted);margin:8px 0"><i data-lucide="arrow-down" style="width:20px;height:20px"></i></div>
+                <div style="display:flex;align-items:center;gap:12px">
+                    <div style="width:40px;height:40px;background:#ecfdf5;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--success);font-weight:700">3</div>
+                    <div>
+                        <div style="font-weight:600;font-size:14px">顶点式</div>
+                        <div style="font-family:'Cambria Math',serif;color:var(--success);font-size:16px">f(x) = 2(x - 2)² - 2</div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary" style="margin-top:16px" onclick="closeImageModal()">理解了</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="errorbookModal" onclick="closeErrorbookModal(event)">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <i data-lucide="bookmark-plus" style="width:40px;height:40px;color:var(--primary);margin-bottom:12px"></i>
+            <div class="modal-title">是否将本题加入错题本？</div>
+            <div class="modal-desc">加入后，AI 会为你总结本次对话，生成知识薄弱点分析，帮助你针对性提高。</div>
+            <div class="modal-actions">
+                <button class="btn btn-ghost" onclick="closeErrorbookModal()">不需要</button>
+                <button class="btn btn-primary" onclick="confirmErrorbook()">
+                    <i data-lucide="bookmark-plus" style="width:14px;height:14px"></i> 加入错题本
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+        }
+
+        function toggleCategory(el) {
+            el.nextElementSibling.classList.toggle('open');
+        }
+
+        function selectTopic(topic) {
+            var container = document.getElementById('dialogContainer');
+            var div = document.createElement('div');
+            div.className = 'dialog-msg user animate-fade-in-up';
+            div.innerHTML = '<div class="dialog-avatar human"><i data-lucide="user" style="width:18px;height:18px"></i></div>' +
+                '<div class="dialog-bubble">' + topic + '这一步我不太明白</div>';
+            container.appendChild(div);
+            lucide.createIcons();
+            container.scrollTop = container.scrollHeight;
+
+            setTimeout(function() {
+                var typing = document.createElement('div');
+                typing.className = 'dialog-msg animate-fade-in-up';
+                typing.id = 'tempTyping';
+                typing.innerHTML = '<div class="dialog-avatar ai"><i data-lucide="brain" style="width:18px;height:18px"></i></div>' +
+                    '<div class="dialog-bubble"><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>';
+                container.appendChild(typing);
+                container.scrollTop = container.scrollHeight;
+
+                setTimeout(function() {
+                    var t = document.getElementById('tempTyping');
+                    if (t) t.remove();
+                    var ai = document.createElement('div');
+                    ai.className = 'dialog-msg animate-fade-in-up';
+                    ai.innerHTML = '<div class="dialog-avatar ai"><i data-lucide="brain" style="width:18px;height:18px"></i></div>' +
+                        '<div class="dialog-bubble"><p>关于<strong>' + topic + '</strong>，让我来详细解释一下...</p>' +
+                        '<div class="knowledge-card"><div class="knowledge-card-title"><i data-lucide="book-open" style="width:14px;height:14px"></i> ' + topic + '</div>' +
+                        '<div class="knowledge-card-body">这个知识点在这道题中的应用方式是：通过分析二次函数的系数特征，我们可以确定函数的基本性质，进而利用配方法或公式求解。</div></div>' +
+                        '<p style="margin-top:12px">理解了这个知识点后，你觉得现在能独立解出这道题吗？</p>' +
+                        '<div class="check-btn-group"><button class="btn btn-primary btn-sm" onclick="canSolve()"><i data-lucide="thumbs-up" style="width:14px;height:14px"></i> 可以独立解答</button>' +
+                        '<button class="btn btn-outline btn-sm" onclick="cannotSolve()"><i data-lucide="thumbs-down" style="width:14px;height:14px"></i> 还有不懂的地方</button></div></div>';
+                    container.appendChild(ai);
+                    lucide.createIcons();
+                    container.scrollTop = container.scrollHeight;
+                }, 1500);
+            }, 300);
+        }
+
+        function canSolve() {
+            var container = document.getElementById('dialogContainer');
+            var div = document.createElement('div');
+            div.className = 'dialog-msg user animate-fade-in-up';
+            div.innerHTML = '<div class="dialog-avatar human"><i data-lucide="user" style="width:18px;height:18px"></i></div><div class="dialog-bubble">可以独立解答了！</div>';
+            container.appendChild(div);
+            lucide.createIcons();
+
+            setTimeout(function() {
+                var ai = document.createElement('div');
+                ai.className = 'dialog-msg animate-fade-in-up';
+                ai.innerHTML = '<div class="dialog-avatar ai"><i data-lucide="brain" style="width:18px;height:18px"></i></div>' +
+                    '<div class="dialog-bubble">' +
+                    '<div class="encouragement"><i data-lucide="party-popper" style="width:20px;height:20px"></i><p>太棒了！你已经掌握了这道题的核心思路。继续加油，这种题型以后一定难不倒你！</p></div>' +
+                    '<p style="margin-top:12px;font-size:13px;color:var(--text-secondary)">思考模式完成！本题涉及的知识点：<strong>配方法</strong>、<strong>顶点式</strong>、<strong>二次函数最值</strong>、<strong>单调性分析</strong></p></div>';
+                container.appendChild(ai);
+                lucide.createIcons();
+                container.scrollTop = container.scrollHeight;
+
+                setTimeout(function() {
+                    document.getElementById('errorbookModal').classList.add('active');
+                }, 800);
+            }, 500);
+        }
+
+        function cannotSolve() {
+            var container = document.getElementById('dialogContainer');
+            var div = document.createElement('div');
+            div.className = 'dialog-msg user animate-fade-in-up';
+            div.innerHTML = '<div class="dialog-avatar human"><i data-lucide="user" style="width:18px;height:18px"></i></div><div class="dialog-bubble">还是有些地方不太明白</div>';
+            container.appendChild(div);
+            lucide.createIcons();
+
+            setTimeout(function() {
+                var ai = document.createElement('div');
+                ai.className = 'dialog-msg animate-fade-in-up';
+                ai.innerHTML = '<div class="dialog-avatar ai"><i data-lucide="brain" style="width:18px;height:18px"></i></div>' +
+                    '<div class="dialog-bubble">' +
+                    '<p style="margin-bottom:12px">没关系，我们继续深入！</p>' +
+                    '<p style="margin-bottom:8px">让我来看看你可能卡在了哪里。你觉得是不是下面这个知识点还没完全理解？</p>' +
+                    '<div class="knowledge-card"><div class="knowledge-card-title"><i data-lucide="link" style="width:14px;height:14px"></i> 下一个知识点：顶点式与图像的关系</div>' +
+                    '<div class="knowledge-card-body">对于 f(x) = a(x - h)² + k：<br>- (h, k) 就是顶点坐标<br>- a > 0 时开口向上，有最小值 k<br>- a < 0 时开口向下，有最大值 k<br>- 对称轴为 x = h</div></div>' +
+                    '<p style="margin-top:12px">结合这个知识点，你再想想这道题。现在能解出来吗？</p>' +
+                    '<div class="check-btn-group"><button class="btn btn-primary btn-sm" onclick="canSolve()"><i data-lucide="thumbs-up" style="width:14px;height:14px"></i> 可以了</button>' +
+                    '<button class="btn btn-outline btn-sm" onclick="cannotSolve()"><i data-lucide="thumbs-down" style="width:14px;height:14px"></i> 还是不行</button></div></div>';
+                container.appendChild(ai);
+                lucide.createIcons();
+                container.scrollTop = container.scrollHeight;
+            }, 500);
+        }
+
+        function showImage() {
+            document.getElementById('imageModal').classList.add('active');
+        }
+
+        function closeImageModal(e) {
+            if (e && e.target !== e.currentTarget) return;
+            document.getElementById('imageModal').classList.remove('active');
+        }
+
+        function closeErrorbookModal(e) {
+            if (e && e.target !== e.currentTarget) return;
+            document.getElementById('errorbookModal').classList.remove('active');
+        }
+
+        function confirmErrorbook() {
+            document.getElementById('errorbookModal').classList.remove('active');
+            var container = document.getElementById('dialogContainer');
+            var div = document.createElement('div');
+            div.className = 'dialog-msg animate-fade-in-up';
+            div.innerHTML = '<div class="dialog-avatar ai"><i data-lucide="sparkles" style="width:18px;height:18px"></i></div>' +
+                '<div class="dialog-bubble"><div class="encouragement"><i data-lucide="check-circle-2" style="width:20px;height:20px"></i>' +
+                '<p>已加入错题本！AI 已为你生成本次学习的<strong>知识薄弱点</strong>：配方法应用、顶点式理解。可在<a href="analysis.html" style="color:var(--primary);font-weight:600">学习分析</a>中查看详情。</p></div></div>';
+            container.appendChild(div);
+            lucide.createIcons();
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function endThinking() {
+            window.location.href = 'result.html';
+        }
+
+        function sendThinkingMsg() {
+            var input = document.getElementById('chatInput');
+            var text = input.value.trim();
+            if (!text) return;
+
+            var container = document.getElementById('dialogContainer');
+            var userDiv = document.createElement('div');
+            userDiv.className = 'dialog-msg user animate-fade-in-up';
+            userDiv.innerHTML = '<div class="dialog-avatar human"><i data-lucide="user" style="width:18px;height:18px"></i></div><div class="dialog-bubble">' + text + '</div>';
+            container.appendChild(userDiv);
+            input.value = '';
+            lucide.createIcons();
+
+            var typing = document.createElement('div');
+            typing.className = 'dialog-msg animate-fade-in-up';
+            typing.id = 'tempTyping2';
+            typing.innerHTML = '<div class="dialog-avatar ai"><i data-lucide="brain" style="width:18px;height:18px"></i></div>' +
+                '<div class="dialog-bubble"><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>';
+            container.appendChild(typing);
+            container.scrollTop = container.scrollHeight;
+
+            setTimeout(function() {
+                var t = document.getElementById('tempTyping2');
+                if (t) t.remove();
+                var ai = document.createElement('div');
+                ai.className = 'dialog-msg animate-fade-in-up';
+                ai.innerHTML = '<div class="dialog-avatar ai"><i data-lucide="brain" style="width:18px;height:18px"></i></div>' +
+                    '<div class="dialog-bubble"><p>你的问题很好！让我来帮你分析一下：</p>' +
+                    '<div class="knowledge-card"><div class="knowledge-card-title"><i data-lucide="lightbulb" style="width:14px;height:14px"></i> 针对性解答</div>' +
+                    '<div class="knowledge-card-body">根据你提到的困惑点，关键在于理解二次函数的系数与图像之间的关系。a 的值决定了开口方向和宽窄，b 和 c 则影响了对称轴和截距的位置。</div></div>' +
+                    '<p style="margin-top:12px">还有其他不明白的地方吗？</p></div>';
+                container.appendChild(ai);
+                lucide.createIcons();
+                container.scrollTop = container.scrollHeight;
+            }, 1500);
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeImageModal();
+                closeErrorbookModal();
+            }
+        });
+    </script>
+</body>
+</html>
